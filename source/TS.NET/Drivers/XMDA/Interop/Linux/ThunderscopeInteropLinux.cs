@@ -43,7 +43,7 @@ namespace TS.NET.Driver.XMDA.Interop.Linux
                 {
                     Int32 bytesWritten = Interop.pwrite(userFilePointer, dataPtr, (Int32)data.Length, (Int32)addr);
 
-                    if (bytesWritten != data.Length)
+                    if (bytesWritten != data.Length && (data.length ==1 && bytesWritten !=4)) // Byte written should be either as requested, or in the case of a single byte, padded to 4 bytes TODO: or all writes < 4 bytes ??
                         throw new Exception($"pwrite user - failed -> toWrite={data.Length}, written={bytesWritten}, errno={Marshal.GetLastWin32Error()}");
                 }
             }
